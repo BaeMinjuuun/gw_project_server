@@ -12,7 +12,7 @@ app.use(cors());
 
 app.use("/users", routes.users);
 app.use("/auth", routes.auth);
-app.use("/attendance", routes.attendance);
+app.use("/attendances", routes.attendances);
 
 // 서버 및 DB 초기화
 app.listen(port, async () => {

@@ -12,7 +12,8 @@ router.post("/clockin", async (req, res) => {
   try {
     // 오늘 날짜의 출근 기록이 있는지 확인
     const today = dayjs().format("YYYY-MM-DD"); // 오늘 날짜 포맷
-    const existingRecord = await models.AttendanceRecords.findOne({
+    console.log("today => ", today);
+    const existingRecord = await models.attendances.findOne({
       where: {
         user_id,
         date: today, // 오늘 날짜의 출근 기록 확인
@@ -22,7 +23,7 @@ router.post("/clockin", async (req, res) => {
     if (existingRecord) {
       return res.status(400).send("출근은 하루에 한번만 가능합니다.");
     }
-    const newRecord = await models.AttendanceRecords.create({
+    const newRecord = await models.attendances.create({
       user_id,
       check_in_time,
       date,
@@ -42,7 +43,7 @@ router.post("/clockout", async (req, res) => {
     const today = dayjs().format("YYYY-MM-DD");
 
     // 오늘 날짜의 출근 기록을 확인
-    const existingRecord = await models.AttendanceRecords.findOne({
+    const existingRecord = await models.attendances.findOne({
       where: {
         user_id,
         date: today,

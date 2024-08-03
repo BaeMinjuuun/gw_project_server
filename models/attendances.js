@@ -1,14 +1,19 @@
 module.exports = (sequelize, DataTypes) => {
-  const attendanceRecords = sequelize.define(
-    "AttendanceRecords",
+  const attendances = sequelize.define(
+    "attendances",
     {
+      id: {
+        type: DataTypes.INTEGER,
+        autoIncrement: true,
+        primaryKey: true,
+      },
       user_id: {
-        type: DataTypes.STRING(10),
+        type: DataTypes.STRING(30),
         allowNull: false,
       },
       check_in_time: {
         type: DataTypes.DATE,
-        allowNull: false,
+        allowNull: true,
       },
       check_out_time: {
         type: DataTypes.DATE,
@@ -19,7 +24,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       status: {
-        type: DataTypes.STRING(10),
+        type: DataTypes.STRING(20),
         allowNull: true,
       },
     },
@@ -28,18 +33,19 @@ module.exports = (sequelize, DataTypes) => {
       indexes: [
         {
           unique: true,
-          fields: ["user_id", "date"], // 복합 유니크 인덱스
+          fields: ["user_id", "date"],
         },
       ],
     }
   );
 
-  attendanceRecords.associate = function (models) {
-    attendanceRecords.belongsTo(models.Users, {
+  // 관계 설정 (N:1 관계)
+  attendances.associate = function (models) {
+    attendances.belongsTo(models.Users, {
       foreignKey: "user_id",
       targetKey: "user_id",
     });
   };
 
-  return attendanceRecords;
+  return attendances;
 };
