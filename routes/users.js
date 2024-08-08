@@ -69,6 +69,7 @@ router.post("/", async (req, res) => {
       address,
       email,
       birthday,
+      department,
     });
 
     console.log("회원가입 결과:", newUser);

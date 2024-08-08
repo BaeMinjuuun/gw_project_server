@@ -74,4 +74,27 @@ router.post("/clockout", async (req, res) => {
   }
 });
 
+// 출퇴근 기록 가져오기
+router.get("/getAttendance", async (req, res) => {
+  const { user_id } = req.query;
+  console.log(user_id);
+  const today = dayjs().format("YYYY-MM-DD");
+
+  try {
+    const attendance = await models.attendances.findOne({
+      where: {
+        user_id: user_id,
+        date: today,
+      },
+    });
+    if (attendance) {
+      res.json(attendance);
+    } else {
+      res.json({ message: "미등록" });
+    }
+  } catch (error) {
+    console.error(error);
+  }
+});
+
 module.exports = router;

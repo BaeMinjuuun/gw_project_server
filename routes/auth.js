@@ -32,6 +32,7 @@ router.post("/login", async (req, res) => {
         address: user.address,
         email: user.email,
         birthday: user.birthday,
+        department: user.department,
       },
     });
   } catch (error) {
