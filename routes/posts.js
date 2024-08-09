@@ -17,11 +17,11 @@ router.get("/getPosts", async (req, res) => {
       include: [
         {
           model: models.Users,
-          attributes: ["department"], // 필요한 속성만 포함
+          attributes: ["department"],
         },
         {
           model: models.Categories,
-          attributes: ["name"], // 필요한 속성만 포함
+          attributes: ["name"],
         },
       ],
     });
@@ -53,6 +53,35 @@ router.post("/postWrite", async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(400).send("글쓰기에 문제가 생겼습니다.");
+  }
+});
+
+// 게시물 상세 조회 엔드포인트
+router.get("/getPostDetail/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const post = await models.Posts.findOne({
+      where: { post_id: id },
+      include: [
+        {
+          model: models.Users,
+          attributes: ["department"],
+        },
+        {
+          model: models.Categories,
+          attributes: ["name"],
+        },
+      ],
+    });
+    console.log("post => ", post);
+    res.send(post);
+
+    if (!post) {
+      return res.status(400).send("게시물을 찾을 수 없습니다.");
+    }
+  } catch (error) {
+    console.error(error);
+    res.status(400).send("게시물 조회 중 문제가 발생했습니다.");
   }
 });
 

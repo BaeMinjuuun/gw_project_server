@@ -39,7 +39,7 @@ router.post("/check-user-id", async (req, res) => {
 
 // 회원가입 엔드포인트
 router.post("/", async (req, res) => {
-  const { user_id, password, phone, name, address, email, birthday } = req.body;
+  const { user_id, password, phone, name, address, email, birthday, department, position } = req.body;
 
   if (
     !user_id ||
@@ -48,7 +48,9 @@ router.post("/", async (req, res) => {
     !name ||
     !address ||
     !email ||
-    !birthday
+    !birthday ||
+    !department ||
+    !position
   ) {
     return res.status(400).send("모든 필드를 입력해주세요");
   }

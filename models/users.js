@@ -44,6 +44,7 @@ module.exports = (sequelize, DataTypes) => {
       position: {
         type: DataTypes.STRING(300),
         allowNull: false,
+        defaultValue: "직위없음",
       },
     },
     {

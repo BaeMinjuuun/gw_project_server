@@ -3,6 +3,7 @@ const auth = require("./auth");
 const attendances = require("./attendances");
 const posts = require("./posts");
 const categories = require("./categories");
+const reservationCatgories = require("./reservationCategories");
 
 module.exports = {
   users,
@@ -10,4 +11,5 @@ module.exports = {
   attendances,
   posts,
   categories,
+  reservationCatgories,
 };
