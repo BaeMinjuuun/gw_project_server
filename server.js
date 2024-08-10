@@ -15,6 +15,7 @@ app.use("/auth", routes.auth);
 app.use("/attendances", routes.attendances);
 app.use("/posts", routes.posts);
 app.use("/categories", routes.categories);
+app.use("/reservationCategories", routes.reservationCatgories);
 
 // 서버 및 DB 초기화
 app.listen(port, async () => {

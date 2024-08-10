@@ -15,6 +15,11 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(300),
         allowNull: true,
       },
+      status: {
+        type: DataTypes.STRING(50),
+        allowNull: false,
+        defaultValue: "예약 가능",
+      },
     },
     {
       timestamps: false,
