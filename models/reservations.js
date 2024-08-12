@@ -1,15 +1,11 @@
 module.exports = (sequelize, DataTypes) => {
-  const Reservation = sequelize.define(
-    "Reservation",
+  const Reservations = sequelize.define(
+    "Reservations",
     {
       reservation_id: {
         type: DataTypes.INTEGER,
         autoIncrement: true,
         primaryKey: true,
-      },
-      resource_id: {
-        type: DataTypes.STRING(30),
-        allowNull: false,
       },
       user_id: {
         type: DataTypes.STRING(30),
@@ -20,11 +16,11 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       start_time: {
-        type: DataTypes.DATE,
+        type: DataTypes.TIME,
         allowNull: false,
       },
       end_time: {
-        type: DataTypes.DATE,
+        type: DataTypes.TIME,
         allowNull: false,
       },
       status: {
@@ -36,22 +32,26 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING(300),
         allowNull: true,
       },
+      date: {
+        type: DataTypes.DATEONLY,
+        allowNull: false,
+      },
     },
     {
       timestamps: false,
     }
   );
 
-  Reservation.associate = function (models) {
-    Reservation.belongsTo(models.Users, {
+  Reservations.associate = function (models) {
+    Reservations.belongsTo(models.Users, {
       foreignKey: "user_id",
       targetKey: "user_id",
     });
-    Reservation.belongsTo(models.ReservationCategory, {
+    Reservations.belongsTo(models.ReservationCategories, {
       foreignKey: "category_id",
       targetKey: "category_id",
     });
   };
 
-  return Reservation;
+  return Reservations;
 };

@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const ReservationCategory = sequelize.define(
-    "ReservationCategory",
+  const ReservationCategories = sequelize.define(
+    "ReservationCategories",
     {
       category_id: {
         type: DataTypes.INTEGER,
@@ -25,11 +25,11 @@ module.exports = (sequelize, DataTypes) => {
       timestamps: false,
     }
   );
-  ReservationCategory.associate = function (models) {
-    ReservationCategory.hasMany(models.Reservation, {
+  ReservationCategories.associate = function (models) {
+    ReservationCategories.hasMany(models.Reservations, {
       foreignKey: "category_id",
       sourceKey: "category_id",
     });
   };
-  return ReservationCategory;
+  return ReservationCategories;
 };

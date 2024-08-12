@@ -16,6 +16,9 @@ app.use("/attendances", routes.attendances);
 app.use("/posts", routes.posts);
 app.use("/categories", routes.categories);
 app.use("/reservationCategories", routes.reservationCatgories);
+app.use("/reservations", routes.reservations);
+app.use("/carReservations", routes.carReservations);
+app.use("/carCategories", routes.carCategories);
 
 // 서버 및 DB 초기화
 app.listen(port, async () => {
