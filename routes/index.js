@@ -9,6 +9,8 @@ const carReservations = require("./carReservations");
 const carCategories = require("./carCategories");
 const resourceCategories = require("./resourceCategories");
 const resourceRegisters = require("./resourceRegisters");
+const resourceBookings = require("./resourceBookings");
+
 module.exports = {
   users,
   auth,
@@ -21,4 +23,5 @@ module.exports = {
   carCategories,
   resourceCategories,
   resourceRegisters,
+  resourceBookings,
 };

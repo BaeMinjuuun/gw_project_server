@@ -20,6 +20,7 @@ app.use("/carReservations", routes.carReservations);
 app.use("/carCategories", routes.carCategories);
 app.use("/resourceCategories", routes.resourceCategories);
 app.use("/resourceRegisters", routes.resourceRegisters);
+app.use("/resourceBookings", routes.resourceBookings);
 
 // 서버 및 DB 초기화
 app.listen(port, async () => {
