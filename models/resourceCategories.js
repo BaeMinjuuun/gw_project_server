@@ -1,6 +1,6 @@
 module.exports = (sequelize, DataTypes) => {
-  const Categories = sequelize.define(
-    "Categories",
+  const ResourceCategories = sequelize.define(
+    "ResourceCategories",
     {
       category_id: {
         type: DataTypes.INTEGER,
@@ -36,5 +36,5 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
-  return Categories;
+  return ResourceCategories;
 };

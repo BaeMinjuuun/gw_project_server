@@ -7,7 +7,8 @@ const reservationCatgories = require("./reservationCategories");
 const reservations = require("./reservactions");
 const carReservations = require("./carReservations");
 const carCategories = require("./carCategories");
-
+const resourceCategories = require("./resourceCategories");
+const resourceRegisters = require("./resourceRegisters");
 module.exports = {
   users,
   auth,
@@ -18,4 +19,6 @@ module.exports = {
   reservations,
   carReservations,
   carCategories,
+  resourceCategories,
+  resourceRegisters,
 };

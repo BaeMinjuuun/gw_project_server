@@ -1,6 +1,5 @@
 const express = require("express");
 const cors = require("cors");
-const bcrypt = require("bcryptjs");
 const models = require("./models");
 const routes = require("./routes");
 
@@ -19,6 +18,8 @@ app.use("/reservationCategories", routes.reservationCatgories);
 app.use("/reservations", routes.reservations);
 app.use("/carReservations", routes.carReservations);
 app.use("/carCategories", routes.carCategories);
+app.use("/resourceCategories", routes.resourceCategories);
+app.use("/resourceRegisters", routes.resourceRegisters);
 
 // 서버 및 DB 초기화
 app.listen(port, async () => {
