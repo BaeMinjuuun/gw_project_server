@@ -50,7 +50,7 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       targetKey: "user_id",
-      onDelete: "NO ACTION", // 사용자가 삭제될 때 관련 예약은 삭제되지 않음
+      onDelete: "NO ACTION",
       onUpdate: "CASCADE", // 사용자 ID가 변경될 때 예약의 fk_user_id도 업데이트
     });
   };

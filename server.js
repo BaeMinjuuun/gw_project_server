@@ -1,10 +1,13 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 const models = require("./models");
 const routes = require("./routes");
 
 const app = express();
 const port = 8080;
+
+app.use("/images", express.static(path.join(__dirname, "images")));
 
 app.use(express.json());
 app.use(cors());
