@@ -3,6 +3,7 @@ const models = require("../models");
 const multer = require("multer");
 const path = require("path");
 const fs = require("fs");
+const { Op } = require("sequelize");
 const router = express.Router();
 
 // 파일명 생성 함수 ex) 20240815100830
@@ -59,8 +60,8 @@ router.post("/upload", upload.single("image_url"), async (req, res) => {
   // 파일이 성공적으로 업로드되면, req.file 객체에 파일 정보가 저장됩니다.
   const image_url = req.file ? `/images/${req.file.filename}` : null;
   const image_original_name = req.file ? req.file.originalname : null;
-  console.log("image_url => ", image_url);
-  console.log("image_original_name => ", image_original_name);
+  // console.log("image_url => ", image_url);
+  // console.log("image_original_name => ", image_original_name);
 
   try {
     await models.ResourceRegisters.create({
@@ -136,6 +137,47 @@ router.delete("/deleteList/:id", async (req, res) => {
   } catch (error) {
     console.error("삭제 실패:", error);
     res.status(500).send("서버 오류");
+  }
+});
+
+// 카테고리별 예약현황 엔드포인트
+router.get("/getRegisterList/:id", async (req, res) => {
+  const resource_id = req.params.id;
+  console.log("RESOURCE_ID => ", resource_id);
+
+  try {
+    // 현재 날짜를 한국 표준시(KST)로 설정
+    const now = new Date();
+    const koreanOffset = 9 * 60 * 60 * 1000; // KST는 UTC+9 시간대
+    const todayKST = new Date(now.getTime() + koreanOffset);
+    todayKST.setUTCHours(0, 0, 0, 0); // 시간 부분을 00:00:00로 설정
+    const todayKSTISOString = todayKST.toISOString(); // ISO 문자열로 변환
+    const registerData = await models.ResourceBookings.findAll({
+      where: { fk_resource_id: resource_id },
+      start_time: {
+        [Op.gte]: todayKSTISOString, // start_time이 한국 표준시 기준으로 오늘 날짜 이후
+      },
+    });
+
+    res.json(registerData);
+  } catch (error) {
+    console.error("예약 데이터 조회 중 오류 발생:", error);
+    res.status(500).json({ error: "서버 오류" });
+  }
+});
+
+router.get("/getRegisterTime/:id", async (req, res) => {
+  const resource_id = req.params.id;
+
+  try {
+    const registers = await models.ResourceRegisters.findAll({
+      where: { resource_id: resource_id },
+    });
+
+    res.json(registers);
+  } catch (error) {
+    console.error("예약 데이터 조회 중 오류 발생:", error);
+    res.status(500).json({ message: "서버 오류 발생" });
   }
 });
 

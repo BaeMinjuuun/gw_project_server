@@ -46,6 +46,9 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "fk_category_id",
       targetKey: "category_id",
     });
+    ResourceRegisters.hasMany(models.ResourceBookings, {
+      foreignKey: "fk_resource_id",
+    });
   };
 
   return ResourceRegisters;

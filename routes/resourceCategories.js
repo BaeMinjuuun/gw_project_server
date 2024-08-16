@@ -6,42 +6,39 @@ const router = express.Router();
 
 router.get("/getCategories", async (req, res) => {
   try {
-    const categoiryList = await models.ResourceCategories.findAll();
-    res.send(categoiryList);
+    const categoryList = await models.ResourceCategories.findAll();
+    res.send(categoryList);
   } catch (error) {
     console.error(error);
   }
 });
 
-router.get("/getCategory/:id", async (req, res) => {
+router.get("/getCategoryName/:id", async (req, res) => {
   const { id } = req.params;
   try {
-    const resourceRegisters = await models.ResourceRegisters.findAll({
+    const categoiryName = await models.ResourceCategories.findOne({
+      where: { category_id: id },
+    });
+    res.send(categoiryName);
+  } catch (error) {
+    console.error(error);
+  }
+});
+
+router.get("/getCategoryList/:id", async (req, res) => {
+  const { id } = req.params;
+  try {
+    const categoryData = await models.ResourceRegisters.findAll({
       where: { fk_category_id: id },
     });
-
-    const resourceIds = resourceRegisters.map(
-      (resource) => resource.resource_id
-    );
-
-    console.log("RESOURCEID => ", resourceIds);
-
-    if (resourceIds.length === 0) {
+    if (!categoryData) {
       return res
         .status(404)
-        .json({ message: "해당 카테고리에 리소스가 없습니다." });
+        .json({ message: "해당 카테고리에 대한 데이터가 없습니다." });
     }
-
-    const bookings = await models.ResourceBookings.findAll({
-      where: {
-        fk_resource_id: resourceIds,
-      },
-    });
-    console.log("BOOKINGS => ", bookings);
-
-    res.json(bookings);
+    res.json(categoryData);
   } catch (error) {
-    console.error("카테고리별 예약 조회 중 오류 발생:", error);
+    console.error("카테고리 데이터 조회 중 오류 발생:", error);
     res.status(500).json({ error: "서버 오류" });
   }
 });

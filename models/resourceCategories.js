@@ -36,5 +36,12 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
 
+  ResourceCategories.associate = function (models) {
+    ResourceCategories.hasMany(models.ResourceRegisters, {
+      foreignKey: "fk_category_id",
+      targetKey: "category_id",
+    });
+  };
+
   return ResourceCategories;
 };
