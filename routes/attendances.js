@@ -2,8 +2,13 @@ const express = require("express");
 const bcrypt = require("bcryptjs");
 const models = require("../models");
 const dayjs = require("dayjs");
+const { Op } = require("sequelize");
+const moment = require("moment");
 
 const router = express.Router();
+
+const weekOfYear = require("dayjs/plugin/weekOfYear");
+dayjs.extend(weekOfYear);
 
 // 출근 기록 엔드포인트
 router.post("/clockin", async (req, res) => {
@@ -96,5 +101,60 @@ router.get("/getAttendance", async (req, res) => {
     console.error(error);
   }
 });
+
+// 주차별 출퇴근 기록 가져오기
+router.get("/getMyRecord", async (req, res) => {
+  const { user_id, start_date, end_date } = req.query;
+
+  try {
+    // 데이터베이스에서 출퇴근 기록 조회
+    const attendances = await models.attendances.findAll({
+      where: {
+        user_id: user_id,
+        date: {
+          [Op.between]: [start_date, end_date], // Sequelize의 BETWEEN 연산자 사용
+        },
+      },
+    });
+
+    // 주차별 데이터 가공
+    const groupedData = attendances.reduce((acc, entry) => {
+      const weekNumber = moment(entry.date).week(); // 주차 계산
+      const weekKey = `week${weekNumber}`;
+      if (!acc[weekKey]) acc[weekKey] = [];
+      acc[weekKey].push({
+        id: entry.id,
+        user_id: entry.user_id,
+        date: entry.date,
+        check_in_time: moment(entry.check_in_time).format("HH:mm"),
+        check_out_time: moment(entry.check_out_time).format("HH:mm"),
+        total_hours: calculateHours(entry.check_in_time, entry.check_out_time),
+      });
+      return acc;
+    }, {});
+
+    res.json(groupedData);
+  } catch (error) {
+    console.error("Error fetching attendance data:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+// 시간 계산 함수
+const calculateHours = (checkInTime, checkOutTime) => {
+  if (!checkInTime || !checkOutTime) {
+    console.error(
+      "Invalid checkInTime or checkOutTime:",
+      checkInTime,
+      checkOutTime
+    );
+    return "기록없음"; // 데이터가 없는 경우
+  }
+  const checkIn = moment(checkInTime, "HH:mm");
+  const checkOut = moment(checkOutTime, "HH:mm");
+
+  const duration = moment.duration(checkOut.diff(checkIn));
+  return duration.asHours().toFixed(1); // 소수점 1자리까지
+};
 
 module.exports = router;

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<workbench progressCount="8" version="2.0">
+<workbench progressCount="12" version="2.0">
 <workbenchAdvisor/>
-<window height="1288" width="1924" x="1770" y="979">
+<window height="1063" width="1936" x="1912" y="0">
 <fastViewData fastViewLocation="1024"/>
 <perspectiveBar>
 <itemSize x="160"/>
@@ -25,15 +25,10 @@
 <editorArea activeWorkbook="DefaultEditorWorkbook">
 <info part="DefaultEditorWorkbook">
 <folder appearance="1" expanded="2">
-<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory">
-<part id="0"/>
-</presentation>
+<presentation id="org.eclipse.ui.presentations.WorkbenchPresentationFactory"/>
 </folder>
 </info>
 </editorArea>
-<editor focus="true" id="com.tomato.exerd.editor.DiagramEditor" name="gw_project_exerd.exerd" partName="gw_project_exerd.exerd" path="D:/zxnm46/react_project/gw_project_server/exerd/gw_project_exerd.exerd" title="gw_project_exerd.exerd" tooltip="exerd/gw_project_exerd.exerd" workbook="DefaultEditorWorkbook">
-<input factoryID="org.eclipse.ui.part.FileEditorInputFactory" path="/exerd/gw_project_exerd.exerd"/>
-</editor>
 </editors>
 <views>
 <view id="com.tomato.exerd.modelview3.ModelView3" partName="모델">
@@ -163,19 +158,7 @@
 </perspective>
 </perspectives>
 <workingSets/>
-<navigationHistory>
-<editors>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.tomato.exerd.editor.DiagramEditor" path="/newProject/gw_project_exerd.exerd"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="org.eclipse.ui.DefaultTextEditor" path="/exerd/.project"/>
-<editor factoryID="org.eclipse.ui.part.FileEditorInputFactory" id="com.tomato.exerd.editor.DiagramEditor" path="/exerd/gw_project_exerd.exerd"/>
-</editors>
-<item historyLabel="gw_project_exerd.exerd" index="0"/>
-<item historyLabel="gw_project_exerd.exerd" index="0"/>
-<item historyLabel=".project" index="1">
-<position/>
-</item>
-<item active="true" historyLabel="gw_project_exerd.exerd" index="2"/>
-</navigationHistory>
+<navigationHistory/>
 <input factoryID="org.eclipse.ui.internal.model.ResourceFactory" path="/" type="8"/>
 </page>
 <workbenchWindowAdvisor/>

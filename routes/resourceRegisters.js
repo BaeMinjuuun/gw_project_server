@@ -10,7 +10,7 @@ const router = express.Router();
 function getFormattedDate() {
   const date = new Date();
   const year = date.getFullYear();
-  const month = String(date.getMonth() + 1).padStart(2, "0"); // 월은 0부터 시작하므로 1을 더해줌
+  const month = String(date.getMonth() + 1).padStart(2, "0");
   const day = String(date.getDate()).padStart(2, "0");
   const hours = String(date.getHours()).padStart(2, "0");
   const minutes = String(date.getMinutes()).padStart(2, "0");
@@ -146,16 +146,10 @@ router.get("/getRegisterList/:id", async (req, res) => {
   console.log("RESOURCE_ID => ", resource_id);
 
   try {
-    // 현재 날짜를 한국 표준시(KST)로 설정
-    const now = new Date();
-    const koreanOffset = 9 * 60 * 60 * 1000; // KST는 UTC+9 시간대
-    const todayKST = new Date(now.getTime() + koreanOffset);
-    todayKST.setUTCHours(0, 0, 0, 0); // 시간 부분을 00:00:00로 설정
-    const todayKSTISOString = todayKST.toISOString(); // ISO 문자열로 변환
     const registerData = await models.ResourceBookings.findAll({
-      where: { fk_resource_id: resource_id },
-      start_time: {
-        [Op.gte]: todayKSTISOString, // start_time이 한국 표준시 기준으로 오늘 날짜 이후
+      where: {
+        fk_resource_id: resource_id,
+        start_time: { [Op.gt]: new Date() },
       },
     });
 
@@ -163,21 +157,6 @@ router.get("/getRegisterList/:id", async (req, res) => {
   } catch (error) {
     console.error("예약 데이터 조회 중 오류 발생:", error);
     res.status(500).json({ error: "서버 오류" });
-  }
-});
-
-router.get("/getRegisterTime/:id", async (req, res) => {
-  const resource_id = req.params.id;
-
-  try {
-    const registers = await models.ResourceRegisters.findAll({
-      where: { resource_id: resource_id },
-    });
-
-    res.json(registers);
-  } catch (error) {
-    console.error("예약 데이터 조회 중 오류 발생:", error);
-    res.status(500).json({ message: "서버 오류 발생" });
   }
 });
 
