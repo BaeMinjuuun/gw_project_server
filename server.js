@@ -5,12 +5,15 @@ const models = require("./models");
 const routes = require("./routes");
 
 const app = express();
-const port = 8080;
+const PORT = process.env.PORT || 8000;
+const PROJECT_ROOT = path.join(__dirname, "..", "..");
+const REACT_BUILD_PATH = path.join(PROJECT_ROOT, "gw_project", "build");
 
 app.use("/images", express.static(path.join(__dirname, "images")));
 
-app.use(express.json());
+app.use(express.static(REACT_BUILD_PATH));
 app.use(cors());
+app.use(express.json());
 
 app.use("/users", routes.users);
 app.use("/auth", routes.auth);
@@ -25,13 +28,19 @@ app.use("/resourceCategories", routes.resourceCategories);
 app.use("/resourceRegisters", routes.resourceRegisters);
 app.use("/resourceBookings", routes.resourceBookings);
 
+app.get("*", (req, res) => {
+  res.sendFile(path.join(REACT_BUILD_PATH, "index.html"));
+});
+
 // 서버 및 DB 초기화
-app.listen(port, async () => {
+app.listen(PORT, async () => {
   console.log("서버가 돌아가는 중입니다.");
 
   try {
     await models.sequelize.sync();
-    console.log("DB 연결 성공 !!");
+    console.log(`|====================================================|`);
+    console.log(`|=====         ${PORT} DB 연결 성공 !!            =====|`);
+    console.log(`|====================================================|`);
   } catch (error) {
     console.error(error);
     console.log("DB 연결 에러");

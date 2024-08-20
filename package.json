@@ -18,7 +18,8 @@
     "sqlite3": "^5.1.7"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "build": "tsc -p ."
   },
   "name": "gw_project_server",
   "version": "1.0.0",

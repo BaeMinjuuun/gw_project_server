@@ -143,7 +143,6 @@ router.delete("/deleteList/:id", async (req, res) => {
 // 카테고리별 예약현황 엔드포인트
 router.get("/getRegisterList/:id", async (req, res) => {
   const resource_id = req.params.id;
-  console.log("RESOURCE_ID => ", resource_id);
 
   try {
     const registerData = await models.ResourceBookings.findAll({
